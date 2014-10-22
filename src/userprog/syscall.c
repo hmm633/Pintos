@@ -81,41 +81,50 @@ syscall_handler (struct intr_frame *f)
         // Use parsed data
         // May need to include filesys if correct
         get_args (esp_copy, 2, &args[0]);
-        bool filesys_create (const char *name, off_t initial_size);
+        //bool filesys_create (const char *name, off_t initial_size);
+        filesys_create (args[0], args[1]);
         break;
       case SYS_REMOVE:
         // Use parsed data
         get_args (esp_copy, 1, &args[0]);
-        bool filesys_remove (const char *name);
+        // bool filesys_remove (const char *name);
+        filesys_remove (args[0]);
         break;
       case SYS_OPEN:
         get_args (esp_copy, 1, &args[0]);
-        struct file *filesys_open (const char *name);
+        //struct file *filesys_open (const char *name);
+        filesys_open (args[0]); // <-- not sure about this particular call
         break;
       case SYS_FILESIZE:
         get_args (esp_copy, 1, &args[0]);
-        off_t file_length (struct file *file);
+        //off_t file_length (struct file *file);
+        file_length (args[0]);
         break;
       case SYS_READ:
         get_args (esp_copy, 3, &args[0]);
-        off_t file_read (struct file *file, void *buffer, off_t size);
+        //off_t file_read (struct file *file, void *buffer, off_t size);
+        file_read (args[0], args[1], args[2]);
         break;
       case SYS_WRITE:
         get_args (esp_copy, 3, &args[0]);
         // Check the correctness of this function prototype
-        off_t file_write (struct file *, const void *, off_t size);
+        //off_t file_write (struct file *, const void *, off_t size);
+        file_write(args[0], args[1], args[2]);
         break;
       case SYS_SEEK:
         get_args (esp_copy, 2, &args[0]);
-        void file_seek (struct file *, off_t);
+        //void file_seek (struct file *, off_t);
+        file_seek (args[0], args[1]); // <-- what goes in the offset?
         break;
       case SYS_TELL:
         get_args (esp_copy, 1, &args[0]);
-        off_t file_tell (struct file *);
+        //off_t file_tell (struct file *);
+        file_tell (args[0]);
         break;
       case SYS_CLOSE:
         get_args (esp_copy, 1, &args[0]);
-        void file_close (struct file *);
+        // void file_close (struct file *);
+        file_close (args[0]);
         break;
       default: // optional
         // statements, error invalid system call, not recognized
